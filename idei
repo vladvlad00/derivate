@@ -17,6 +17,7 @@ sqrt folosim sqrt(f) = f^(1/2)
 pentru sin, cos, tg, ctg, arcsin, arccos, arctg, arcctg, ln folosim f(g(x)) = f'(g(x)) * g'
 sa vedem ce facem cu constantele gen e, pi
 simplificam arborele derivatei pe parcurs (de exemplu x^1 se transforma in x, sau x^4/x^2 = x^2)
+ca sa punem paranteze de la postfix catre infix, analizam daca prioritatea fiului < prioritatea tatalui -> punem ()
 
 functionalitate bonus
 -vizualizam arborii
