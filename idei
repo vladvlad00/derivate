@@ -1,8 +1,10 @@
 pasi pentru crearea derivatei
 
 -citim expresia
--transformam in forma postfixata
--transformam in arborele expresiei (binar)
+-o validam ->alex
+-o transformam in forma noastra (12x->12*x de ex) ->vlad
+-transformam in forma postfixata->toti
+-transformam in arborele expresiei (binar) ->matei
 -din arborele expresiei obtinem arboreled derivate (nu stim cum?)
 -parcurgem inordine arborele derivatei, punem paranteze unde trebuie (cum?) si afisam
 
@@ -17,7 +19,6 @@ sqrt folosim sqrt(f) = f^(1/2)
 pentru sin, cos, tg, ctg, arcsin, arccos, arctg, arcctg, ln folosim f(g(x)) = f'(g(x)) * g'
 sa vedem ce facem cu constantele gen e, pi
 simplificam arborele derivatei pe parcurs (de exemplu x^1 se transforma in x, sau x^4/x^2 = x^2)
-ca sa punem paranteze de la postfix catre infix, analizam daca prioritatea fiului < prioritatea tatalui -> punem ()
 
 functionalitate bonus
 -vizualizam arborii
@@ -27,3 +28,5 @@ functionalitate bonus
 -ecranul de start care are si help(explica cum se foloseste aplicatia)
 -trebuie vazute erori de input (paranteze etc)
 -evaluare functiei / derivatei intr-un punct (sa avem grija la impartirea cu 0)
+
+-facem input dinamic (punem butoane cu functiile pe care le apasa si
