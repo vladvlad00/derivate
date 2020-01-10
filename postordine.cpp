@@ -9,13 +9,23 @@ void postordine(string s, string &rez)
 
     for (int i=0;i<n;i++)
     {
+        if ((s[i] == '-' && (i == 0 || s[i-1] == '(')) || ('0' <= s[i] && s[i] <= '9'))
+        {
+            string numar;
+            numar += s[i++];
+            while ('0' <= s[i] && s[i] <= '9')
+                numar += s[i++];
+            i--;
+            rez += numar + ' ';
+            continue;
+        }
         aux += s[i];
         if (esteOperator(aux))
         {
             insereazaOperator(aux,rez);
             aux = "";
         }
-        else if (esteConstanta(aux) || esteVariabila(aux) || esteNumar(aux))
+        else if (esteConstanta(aux) || esteVariabila(aux))
         {
             rez += aux + ' ';
             aux = "";
@@ -35,8 +45,7 @@ void postordine(string s, string &rez)
         throw "YEET";
     while (!S.empty())
     {
-        rez += S.top();
-        rez += ' ';
+        rez += S.top() + ' ';
         S.pop();
     }
 }
@@ -45,8 +54,7 @@ void insereazaOperator(string s,string &rez)
 {
     while (!S.empty() && S.top()[0] != '(' && prioritate(S.top()) <= prioritate(s))
     {
-        rez += S.top();
-        rez += ' ';
+        rez += S.top() + ' ';
         S.pop();
     }
     S.push(s);
@@ -56,8 +64,7 @@ void scoateParanteza(string &rez)
 {
     while (S.top()[0] != '(')
     {
-        rez += S.top();
-        rez += ' ';
+        rez += S.top() + ' ';
         S.pop();
     }
     S.pop();

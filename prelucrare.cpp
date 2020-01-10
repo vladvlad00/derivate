@@ -1,7 +1,6 @@
 #include "prelucrare.h"
-#include <cstring>
 
-void transforma(string &exp)
+void transforma(string &exp)  //MAI FA SA INLOCUIASCA SQRT CU ^(1/2) + CAZUL IN CARE E CEVA GEN -X -> -1*X
 {
     int lg = exp.length();
     int i, j;
