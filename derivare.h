@@ -16,6 +16,7 @@ arbore derivareArccos(arbore A);
 arbore derivareArctg(arbore A);
 arbore derivareArcctg(arbore A);
 arbore derivareLn(arbore A);
+arbore copie(arbore A);
 
 void simplifica(arbore&A);
 void simplificaAdunare(arbore&A);
@@ -25,10 +26,4 @@ void simplificaImpartire(arbore&A);
 void simplificaPutere(arbore&A);
 void simplificaSin(arbore&A);
 void simplificaCos(arbore&A);
-void simplificaTg(arbore&A);
-void simplificaCtg(arbore&A);
-void simplificaArcsin(arbore&A);
-void simplificaArccos(arbore&A);
-void simplificaArctg(arbore&A);
-void simplificaArcctg(arbore&A);
 void simplificaLn(arbore&A);

@@ -68,7 +68,7 @@ arbore derivareScadere(arbore A)
 
     rez->st = derivare(f);
     rez->dr = derivare(g);
-    
+
     return rez;
 }
 
@@ -81,14 +81,14 @@ arbore derivareInmultire(arbore A)
 
 
     arbore FiuSt = new nodAB("*");
-    rez->st=FiuSt;
     FiuSt->st=derivare(f);
-    FiuSt->dr=g;
+    FiuSt->dr=copie(g);
+    rez->st=FiuSt;
 
     arbore FiuDr = new nodAB("*");
-    rez->dr=FiuDr;
-    FiuDr->st=f;
+    FiuDr->st=copie(f);
     FiuDr->dr=derivare(g);
+    rez->dr=FiuDr;
 
     return rez;
 
@@ -104,17 +104,19 @@ arbore derivareImpartire(arbore A)
     arbore numarator = new nodAB("-");
     arbore t1 = new nodAB("*");
     t1->st = derivare(f);
-    t1->dr = g;
+    t1->dr = copie(g);
     arbore t2 = new nodAB("*");
-    t2->st = f;
+    t2->st = copie(f);
     t2->dr = derivare(g);
     numarator->st = t1;
     numarator->dr = t2;
 
     arbore numitor = new nodAB("^");
-    numitor->st = g;
+    numitor->st = copie(g);
     numitor->dr = new nodAB("2");
 
+    rez->st = numarator;
+    rez->dr = numitor;
     return rez;
 }
 
@@ -128,9 +130,9 @@ arbore derivarePutere(arbore A)
     rez->st = A;
 
     arbore t2 = new nodAB("*");
-    t2->st = g;
+    t2->st = copie(g);
     t2->dr = new nodAB("ln");
-    t2->dr->dr = f;
+    t2->dr->dr = copie(f);
     rez->dr = derivare(t2);
 
     return rez;
@@ -144,7 +146,7 @@ arbore derivareSin(arbore A)
     arbore f = A->dr;
 
     arbore FiuSt = new nodAB("cos");
-    FiuSt->dr=f;
+    FiuSt->dr=copie(f);
     rez->st=FiuSt;
 
     rez->dr=derivare(f);
@@ -182,7 +184,7 @@ arbore derivareTg(arbore A)
 
     arbore numitor = new nodAB("^");
     numitor->st = new nodAB("cos");
-    numitor->st->dr = f;
+    numitor->st->dr = copie(f);
     numitor->dr = new nodAB("2");
     rez ->dr = numitor;
 
@@ -202,7 +204,7 @@ arbore derivareCtg(arbore A)
 
     arbore numitor = new nodAB("^");
     numitor->st = new nodAB("sin");
-    numitor->st->dr = f;
+    numitor->st->dr = copie(f);
     numitor->dr = new nodAB("2");
     rez ->dr = numitor;
 
@@ -222,7 +224,7 @@ arbore derivareArcsin(arbore A)
     arbore subRadical = new nodAB("-");
     subRadical->st = new nodAB("1");
     subRadical->dr = new nodAB("^");
-    subRadical->dr->st = f;
+    subRadical->dr->st = copie(f);
     subRadical->dr->dr = new nodAB("2");
 
     numitor->st = subRadical;
@@ -249,7 +251,7 @@ arbore derivareArccos(arbore A)
     arbore subRadical = new nodAB("-");
     subRadical->st = new nodAB("1");
     subRadical->dr = new nodAB("^");
-    subRadical->dr->st = f;
+    subRadical->dr->st = copie(f);
     subRadical->dr->dr = new nodAB("2");
 
     numitor->st = subRadical;
@@ -273,7 +275,7 @@ arbore derivareArctg(arbore A)
     arbore numitor = new nodAB("+");
     numitor->st = new nodAB("1");
     numitor->dr = new nodAB("^");
-    numitor->dr->st = f;
+    numitor->dr->st = copie(f);
     numitor->dr->dr = new nodAB("2");
     rez->dr = numitor;
 
@@ -294,7 +296,7 @@ arbore derivareArcctg(arbore A)
     arbore numitor = new nodAB("+");
     numitor->st = new nodAB("1");
     numitor->dr = new nodAB("^");
-    numitor->dr->st = f;
+    numitor->dr->st = copie(f);
     numitor->dr->dr = new nodAB("2");
     rez->dr = numitor;
 
@@ -308,8 +310,18 @@ arbore derivareLn(arbore A)
     arbore rez = new nodAB("/");
 
     rez->st = derivare(f);
-    rez->dr = f;
+    rez->dr = copie(f);
 
+    return rez;
+}
+
+arbore copie(arbore A)
+{
+    if (!A)
+        return nullptr;
+    arbore rez = new nodAB(A->inf);
+    rez->st = copie(A->st);
+    rez->dr = copie(A->dr);
     return rez;
 }
 
@@ -326,13 +338,9 @@ void simplifica(arbore &A)
     else if (A->inf == "-")
         simplificaScadere(A);
     else if (A->inf == "*")
-    {
         simplificaInmultire(A);
-    }
     else if (A->inf == "/")
-    {
-
-    }
+        simplificaImpartire(A);
     else if (A->inf == "^")
     {
 
@@ -345,36 +353,10 @@ void simplifica(arbore &A)
     {
 
     }
-    else if (A->inf == "tg")
-    {
-
-    }
-    else if (A->inf == "ctg")
-    {
-
-    }
-    else if (A->inf == "arcsin")
-    {
-
-    }
-    else if (A->inf == "arccos")
-    {
-
-    }
-    else if (A->inf == "arctg")
-    {
-
-    }
-    else if (A->inf == "arcctg")
-    {
-
-    }
     else if (A->inf == "ln")
     {
 
     }
-    else
-        throw "Operatie necunoscuta";
 }
 
 void simplificaAdunare(arbore&A)
@@ -427,7 +409,7 @@ void simplificaScadere(arbore&A)
         A->dr = nullptr;
         A->inf = to_string(nr1 - nr2);
     }
-    if (esteNumar(fiuDr->inf))
+    else if (esteNumar(fiuDr->inf))
     {
         int nr = stoi(fiuDr->inf);
         if (nr == 0)
@@ -464,6 +446,11 @@ void simplificaInmultire(arbore&A)
             A->dr = nullptr;
             A->inf = "0";
         }
+        else if (nr == 1)
+        {
+            delete fiuSt;
+            A = fiuDr;
+        }
     }
     else if (esteNumar(fiuDr->inf))
     {
@@ -475,6 +462,52 @@ void simplificaInmultire(arbore&A)
             A->st = nullptr;
             A->dr = nullptr;
             A->inf = "0";
+        }
+        else if (nr == 1)
+        {
+            delete fiuDr;
+            A = fiuSt;
+        }
+    }
+}
+
+void simplificaImpartire(arbore &A)
+{
+    arbore fiuSt = A->st;
+    arbore fiuDr = A->dr;
+
+    if (esteNumar(fiuSt->inf) && esteNumar(fiuDr->inf))
+    {
+        int nr1 = stoi(fiuSt->inf);
+        int nr2 = stoi(fiuDr->inf);
+        if (nr1 % nr2 == 0)
+        {
+            delete fiuSt;
+            delete fiuDr;
+            A->st = nullptr;
+            A->dr = nullptr;
+            A->inf = to_string(nr1 / nr2);
+        }
+    }
+    else if (esteNumar(fiuSt->inf))
+    {
+        int nr = stoi(fiuSt->inf);
+        if (nr == 0)
+        {
+            delete fiuSt;
+            delete fiuDr;
+            A->st = nullptr;
+            A->dr = nullptr;
+            A->inf = "0";
+        }
+    }
+    else if (esteNumar(fiuDr->inf))
+    {
+        int nr = stoi(fiuDr->inf);
+        if (nr == 1)
+        {
+            delete fiuDr;
+            A = fiuSt;
         }
     }
 }
