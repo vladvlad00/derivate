@@ -68,6 +68,8 @@ arbore derivareScadere(arbore A)
 
     rez->st = derivare(f);
     rez->dr = derivare(g);
+    
+    return rez;
 }
 
 arbore derivareInmultire(arbore A)
