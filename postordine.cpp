@@ -1,6 +1,7 @@
 #include "postordine.h"
 
-stiva S;
+stivaString stivaStr;
+stivaArbore stivaArb;
 
 void postordine(string s, string &rez)
 {
@@ -32,7 +33,7 @@ void postordine(string s, string &rez)
         }
         else if (aux[0] == '(')
         {
-            S.push(aux);
+            stivaStr.push(aux);
             aux = "";
         }
         else if (aux[0] == ')')
@@ -43,31 +44,65 @@ void postordine(string s, string &rez)
     }
     if (aux != "")
         throw "YEET";
-    while (!S.empty())
+    while (!stivaStr.empty())
     {
-        rez += S.top() + ' ';
-        S.pop();
+        rez += stivaStr.top() + ' ';
+        stivaStr.pop();
     }
+}
+
+arbore creeazaArboreExpresie(string exp)
+{
+    string aux;
+    int n = exp.length();
+
+    for (int i=0;i<n;i++)
+    {
+        if (exp[i] == ' ')
+        {
+            if (esteOperator(aux))
+            {
+                arbore aux2 = new nodAB(aux);
+                aux2->dr = stivaArb.top();
+                stivaArb.pop();
+                if (aux == "+" || aux == "-" || aux == "*" || aux == "/" || aux == "^")
+                {
+                    aux2->st = stivaArb.top();
+                    stivaArb.pop();
+                }
+                stivaArb.push(aux2);
+            }
+            else
+            {
+                arbore aux2 = new nodAB(aux);
+                stivaArb.push(aux2);
+            }
+            aux = "";
+        }
+        else
+            aux += exp[i];
+    }
+    return stivaArb.top();
 }
 
 void insereazaOperator(string s,string &rez)
 {
-    while (!S.empty() && S.top()[0] != '(' && prioritate(S.top()) <= prioritate(s))
+    while (!stivaStr.empty() && stivaStr.top()[0] != '(' && prioritate(stivaStr.top()) <= prioritate(s))
     {
-        rez += S.top() + ' ';
-        S.pop();
+        rez += stivaStr.top() + ' ';
+        stivaStr.pop();
     }
-    S.push(s);
+    stivaStr.push(s);
 }
 
 void scoateParanteza(string &rez)
 {
-    while (S.top()[0] != '(')
+    while (stivaStr.top()[0] != '(')
     {
-        rez += S.top() + ' ';
-        S.pop();
+        rez += stivaStr.top() + ' ';
+        stivaStr.pop();
     }
-    S.pop();
+    stivaStr.pop();
 }
 
 bool esteOperator(string s)
