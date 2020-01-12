@@ -28,7 +28,9 @@ int LiteraMare(string s,int i)                    //O
 int OperatoriValizi(string s,int i,int &ok)               //O
 {
     if(EsteOperator(s,i)==1)
-        {
+        {   
+            if(s[i]=='/'&&s[i+1]==0)
+                return 0;
             if(i==0)
                 if(s[i]=='-')
                     return 1;
