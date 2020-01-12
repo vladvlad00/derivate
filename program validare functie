@@ -28,8 +28,13 @@ int LiteraMare(string s,int i)                    //O
 int OperatoriValizi(string s,int i)               //O
 {
     if(EsteOperator(s,i)==1)
-        if(EsteOperator(s,i+1)==1)
-            return 0;
+        {
+            if(s[i+1]==NULL)
+                return 0;
+            if(EsteOperator(s,i+1)==1)
+                return 0;
+        }
+
     return 1;
 }
 int FunctiiElemValide(string s,int &i)            //O
