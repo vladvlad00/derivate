@@ -1,94 +1,130 @@
 #include <string>
 #include <iostream>
 using namespace std;
-int EsteLitera(string s,int i)                    //verifica daca elementul s[i] este litera
+int EsteLitera(string s,int i)                    //O
 {
     if((s[i]>='a'&&s[i]<='z')||(s[i]>='A'&&s[i]<='Z'))
         return 1;
     return 0;
 }
-int EsteCifra(string s,int i)                     //verifica daca elementul s[i] este cifra
+int EsteCifra(string s,int i)                     //O
 {
     if(s[i]>='0'&&s[i]<='9')
         return 1;
     return 0;
 }
-int EsteOperator(string s,int i)                  //verifica daca elementul s[i] este operator matematic
+int EsteOperator(string s,int i)                  //O
 {
     if(s[i]=='+'||s[i]=='-'||s[i]=='*'||s[i]=='/'||s[i]=='^')
         return 1;
     return 0;
 }
-int LiteraMare(string s,int i)                    //verifica daca elementul s[i] este litera mare
+int LiteraMare(string s,int i)                    //O
 {
     if(s[i]>='A'&&s[i]<='Z')
         return 1;
     return 0;
 }
-int OperatoriValizi(string s,int i)               //valideaza cazuri gen "++", "+-", etc.
+int OperatoriValizi(string s,int i)               //O
 {
     if(EsteOperator(s,i)==1)
         if(EsteOperator(s,i+1)==1)
             return 0;
     return 1;
 }
-int ElementInvalid(string s,int &i)               //verifica daca elementul s[i] apartine listei de variabile si constante
-{
-    if(EsteLitera(s,i)==1&&LiteraMare(s,i)!=1)
-        if(s[i]!='x'&&s[i]!='y'&&s[i]!='z'&&s[i]!='t'&&s[i]!='e')
-            return 0;
-    if((EsteLitera(s,i)==1&&LiteraMare(s,i)!=1)&&(EsteLitera(s,i+1)==1&&LiteraMare(s,i+i)!=1))
-        if(s[i]!='p'&&s[i+1]!='i')
-            return 0;
-        else
-            if(s[i]=='p'&&s[i+1]=='i')
-                i=i+1;
-    return 1;
-}
-int ParantezeValide(string s,int i)               //verifica daca intre variabile/cifre si paranteze sa fie un operator matematic
-{
-    if(((ElementInvalid(s,i)==1)||EsteCifra(s,i)==1)&&(s[i+1]=='('))
-                return 0;
-    return 1;
-}
-int FunctiiElemValide(string s,int &i)            //verifica scrierea corecta a functiilor elementare, adica daca e paranteza dupa cos sau nu
+int FunctiiElemValide(string s,int &i)            //O
 {
     if(((s[i]=='l'&&s[i+1]=='n')&&(s[i+2]!='('))||((s[i]=='t'&&s[i+1]=='g')&&(s[i+2]!='(')))
         return 0;
     else
-        if((s[i]=='l'&&s[i+1]=='n')&&(s[i+2]=='(')||((s[i]=='t'&&s[i+1]=='g')&&(s[i+2]=='(')))
-            i=i+1;
+        {
+            if((s[i]=='l'&&s[i+1]=='n')&&(s[i+2]=='(')||((s[i]=='t'&&s[i+1]=='g')&&(s[i+2]=='(')))
+            {
+                    i=i+1;
+                    return 1;
+            }
 
-    if(((s[i]=='s'&&s[i+1]=='i'&&s[i+2]=='n')&&(s[i+3]!='('))||((s[i]=='c'&&s[i+1]=='o'&&s[i+2]=='s')&&(s[i+3]!='('))||((s[i]=='c'&&s[i+1]=='t'&&s[i+2]=='g')&&(s[i+3]!='(')))
-        return 0;
-    else
-        if(((s[i]=='s'&&s[i+1]=='i'&&s[i+2]=='n')&&(s[i+3]=='('))||((s[i]=='c'&&s[i+1]=='o'&&s[i+2]=='s')&&(s[i+3]=='('))||((s[i]=='c'&&s[i+1]=='t'&&s[i+2]=='g')&&(s[i+3]=='(')))
-            i=i+2;
+            if(((s[i]=='s'&&s[i+1]=='i'&&s[i+2]=='n')&&(s[i+3]!='('))||((s[i]=='c'&&s[i+1]=='o'&&s[i+2]=='s')&&(s[i+3]!='('))||((s[i]=='c'&&s[i+1]=='t'&&s[i+2]=='g')&&(s[i+3]!='(')))
+                return 0;
+            else
+                {
+                    if(((s[i]=='s'&&s[i+1]=='i'&&s[i+2]=='n')&&(s[i+3]=='('))||((s[i]=='c'&&s[i+1]=='o'&&s[i+2]=='s')&&(s[i+3]=='('))||((s[i]=='c'&&s[i+1]=='t'&&s[i+2]=='g')&&(s[i+3]=='(')))
+                    {
+                        i=i+2;
+                        return 1;
+                    }
 
-    if((s[i]=='s'&&s[i+1]=='q'&&s[i+2]=='r'&&s[i+3]=='t')&&(s[i+4]!='('))
-        return 0;
-    else
-        if((s[i]=='s'&&s[i+1]=='q'&&s[i+2]=='r'&&s[i+3]=='t')&&(s[i+4]=='('))
-            i=i+3;
+                    if((s[i]=='s'&&s[i+1]=='q'&&s[i+2]=='r'&&s[i+3]=='t')&&(s[i+4]!='('))
+                        return 0;
+                    else
+                    {
+                        if((s[i]=='s'&&s[i+1]=='q'&&s[i+2]=='r'&&s[i+3]=='t')&&(s[i+4]=='('))
+                        {
+                            i=i+3;
+                            return 1;
+                        }
 
-    if((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='t'&&s[i+4]=='g')&&(s[i+5]!='('))
-        return 0;
-    else
-        if((((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='t'&&s[i+4]=='g')&&(s[i+5]=='('))))
-            i=i+4;
+                        if((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='t'&&s[i+4]=='g')&&(s[i+5]!='('))
+                            return 0;
+                        else
+                        {
+                            if((((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='t'&&s[i+4]=='g')&&(s[i+5]=='('))))
+                            {
+                                i=i+4;
+                                return 1;
+                            }
 
-    if(((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='s'&&s[i+4]=='i'&&s[i+5]=='n')&&(s[i+6]!='('))||((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='c'&&s[i+4]=='o'&&s[i+5]=='n')&&(s[i+6]!='('))||((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='c'&&s[i+4]=='t'&&s[i+5]=='g')&&(s[i+6]!='(')))
-        return 0;
-    else
-        if(((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='s'&&s[i+4]=='i'&&s[i+5]=='n')&&(s[i+6]=='('))||((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='c'&&s[i+4]=='o'&&s[i+5]=='n')&&(s[i+6]=='('))||((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='c'&&s[i+4]=='t'&&s[i+5]=='g')&&(s[i+6]=='(')))
-            i=i+5;
+                            if(((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='s'&&s[i+4]=='i'&&s[i+5]=='n')&&(s[i+6]!='('))||((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='c'&&s[i+4]=='o'&&s[i+5]=='n')&&(s[i+6]!='('))||((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='c'&&s[i+4]=='t'&&s[i+5]=='g')&&(s[i+6]!='(')))
+                                return 0;
+                            else
+                            {
+                                if(((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='s'&&s[i+4]=='i'&&s[i+5]=='n')&&(s[i+6]=='('))||((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='c'&&s[i+4]=='o'&&s[i+5]=='n')&&(s[i+6]=='('))||((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='c'&&s[i+4]=='t'&&s[i+5]=='g')&&(s[i+6]=='(')))
+                                {
+                                    i=i+5;
+                                    return 1;
+                                }
+                            }
+                        }
+                    }
+                }
+        }
+}
+int ElementInvalid(string s,int &i)               //O
+{
+    if(EsteLitera(s,i)==1&&LiteraMare(s,i)!=1)
+        {
+            if(s[i]=='s'||s[i]=='l'||s[i]=='t'||s[i]=='c'||s[i]=='a')
+                if(FunctiiElemValide(s,i)==1)
+                    return 1;
+                else
+                {
+                    if(s[i]=='t')
+                        return 1;
+                    return 0;
+                }
+            if(EsteLitera(s,i+1)==1&&LiteraMare(s,i+i)!=1)
+                if(s[i]!='p'&&s[i+1]!='i')
+                    return 0;
+                else
+                    if(s[i]=='p'&&s[i+1]=='i')
+                        i=i+1;
+            if(s[i]!='x'&&s[i]!='y'&&s[i]!='z'&&s[i]!='t'&&s[i]!='e')
+                return 0;
+        }
     return 1;
 }
-int VerificareFunctie(string s,int &i,int &nrp)   //verifica functia
+int ParantezeValide(string s,int i)               //O
+{
+    if((s[i]=='x'||s[i]=='y'||s[i]=='t'||s[i]=='z'||(s[i]=='i'&&s[i-1]=='p')||EsteCifra(s,i)==1)&&(s[i+1]=='('))
+                return 0;
+    return 1;
+}
+
+int VerificareFunctie(string s,int &i,int nrp)   //O
 {
     int n;
     n=s.length();
-    while(i<=n)
+    while(i<n)
     {
         if(EsteLitera(s,i)==1)
         {
@@ -99,8 +135,6 @@ int VerificareFunctie(string s,int &i,int &nrp)   //verifica functia
                 if(ElementInvalid(s,i)==0)
                     return 0;
                 if(ParantezeValide(s,i)==0)
-                    return 0;
-                if(FunctiiElemValide(s,i)==0)
                     return 0;
             }
         }
@@ -114,6 +148,8 @@ int VerificareFunctie(string s,int &i,int &nrp)   //verifica functia
             if(s[i]==')')
             {
                 if(EsteOperator(s,i-1)==1)
+                    return 0;
+                if(s[i-1]=='(')
                     return 0;
                 nrp--;
             }
@@ -133,5 +169,4 @@ int main()
         cout<<"Functie valida";
     else
         cout<<"Functie invalida";
-    return 0;
 }
