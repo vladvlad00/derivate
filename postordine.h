@@ -14,6 +14,8 @@ bool esteVariabila(string s);
 bool esteConstanta(string s);
 int prioritate(string s);
 bool esteNumar(string s);
+int esteTrigonometrica(string s);
+int esteTrigonometricaInversa(string s);
 
 struct nodAB
 {
@@ -29,9 +31,9 @@ struct nodAB
     }
 };
 
-typedef nodAB* arbore;
+typedef nodAB* arboreBinar;
 
-arbore creeazaArboreExpresie(string exp);
+arboreBinar creeazaArboreExpresie(string exp);
 
 struct stivaString
 {
@@ -89,9 +91,9 @@ struct stivaArbore
     struct nod
     {
         nod *urm;
-        arbore inf;
+        arboreBinar inf;
 
-        nod(arbore A = nullptr, nod*ptr= nullptr)
+        nod(arboreBinar A = nullptr, nod*ptr= nullptr)
         {
             inf = A;
             urm=ptr;
@@ -107,7 +109,7 @@ struct stivaArbore
         size = 0;
     }
 
-    void push(arbore A)
+    void push(arboreBinar A)
     {
         size++;
         nod *p = new nod(A,inceput);
@@ -124,7 +126,7 @@ struct stivaArbore
         delete p;
     }
 
-    arbore top()
+    arboreBinar top()
     {
         return inceput->inf;
     }

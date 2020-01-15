@@ -51,7 +51,7 @@ void postordine(string s, string &rez)
     }
 }
 
-arbore creeazaArboreExpresie(string exp)
+arboreBinar creeazaArboreExpresie(string exp)
 {
     string aux;
     int n = exp.length();
@@ -62,7 +62,7 @@ arbore creeazaArboreExpresie(string exp)
         {
             if (esteOperator(aux))
             {
-                arbore aux2 = new nodAB(aux);
+                arboreBinar aux2 = new nodAB(aux);
                 aux2->dr = stivaArb.top();
                 stivaArb.pop();
                 if (aux == "+" || aux == "-" || aux == "*" || aux == "/" || aux == "^")
@@ -74,7 +74,7 @@ arbore creeazaArboreExpresie(string exp)
             }
             else
             {
-                arbore aux2 = new nodAB(aux);
+                arboreBinar aux2 = new nodAB(aux);
                 stivaArb.push(aux2);
             }
             aux = "";
@@ -134,9 +134,39 @@ bool esteNumar(string s)
     int lg = s.length();
 
     for (int i=0;i<lg;i++)
+    {
+        if (i == 0 && s[i] == '-' && lg > 1)
+            continue;
         if (s[i] < '0' || s[i] > '9')
             return 0;
+    }
     return 1;
+}
+
+int esteTrigonometrica(string s)
+{
+    if (s == "sin")
+        return 1;
+    if (s == "cos")
+        return 2;
+    if (s == "tg")
+        return 3;
+    if (s == "ctg")
+        return 4;
+    return 0;
+}
+
+int esteTrigonometricaInversa(string s)
+{
+    if (s == "arcsin")
+        return 1;
+    if (s == "arccos")
+        return 2;
+    if (s == "arctg")
+        return 3;
+    if (s == "arcctg")
+        return 4;
+    return 0;
 }
 
 int prioritate(string s)
