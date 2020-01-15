@@ -6,11 +6,13 @@
 using namespace std;
 
 string s, rez;
-int language;
+int language, tried;
+char text[200];
 
 void setup();
 int language_selection_screen();
 void citesteInModGrafic(char text[200], int x, int y, int culoareFundal, int culoareText);
+void try_again();
 
 int screenWidth, screenHeight;
 
@@ -24,46 +26,7 @@ int main()
 
     closegraph();
 
-    initwindow(screenWidth, screenHeight);
-
-    settextstyle(COMPLEX_FONT, HORIZ_DIR, 4);
-    setcolor(YELLOW);
-
-    if(language==1)
-        {
-        outtextxy(200,100, "Introduceti expresia pe care vreti sa o derivati:");
-        }
-
-    if(language==2)
-        {
-        outtextxy(200,100, "Insert the expression for which you want to find the derivative: ");
-        }
-
-    if(language==3)
-        {
-        return 0;
-        }
-
-    char text[200];
-
-    citesteInModGrafic(text, 200, 200, BLACK, WHITE);
-
-    s=text;
-
-    if(!VerificareFunctie(s, i, nrp))
-        {
-        settextstyle(BOLD_FONT, HORIZ_DIR, 6);
-        if(language==1)
-            outtextxy(200, 400, "Functie nevalida");
-            else
-            outtextxy(200, 400, "Invalid function");
-
-        getch();
-        closegraph();
-        return 0;
-        }
-
-    closegraph();
+    try_again();
 
     initwindow(screenWidth,screenHeight);
 
@@ -119,6 +82,54 @@ int main()
 
     return 0;
 }
+
+void try_again()
+    {
+    initwindow(screenWidth, screenHeight);
+
+    settextstyle(COMPLEX_FONT, HORIZ_DIR, 4);
+    setcolor(YELLOW);
+
+    if(language==1)
+        {
+        outtextxy(200,100, "Introduceti expresia pe care vreti sa o derivati:");
+        }
+
+    if(language==2)
+        {
+        outtextxy(200,100, "Insert the expression for which you want to find the derivative: ");
+        }
+
+    if(language==3)
+        {
+        exit(0);
+        }
+
+    if(tried==1)
+        {if(language==1)
+            {
+            outtextxy(200, 400, "Functia introdusa este nevalida. Incearca din nou!");
+            }
+            else
+            {
+            outtextxy(200, 400, "The function is invalid. Try again!");
+            }
+        }
+
+    citesteInModGrafic(text, 200, 200, BLACK, WHITE);
+
+    s=text;
+
+    int i, nrp;
+    if(!VerificareFunctie(s, i, nrp))
+        {tried=1;
+        closegraph();
+        try_again();
+
+        }
+
+    closegraph();
+    }
 
 void setup()
 {
