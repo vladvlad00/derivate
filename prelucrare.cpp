@@ -34,6 +34,8 @@ void transforma(string &exp)  //MAI FA SA INLOCUIASCA SQRT CU ^(1/2) + CAZUL IN 
                 }
             }
         }
+        if (exp[i] == '-' && (i == 0 || exp[i-1] == '('))
+            aux += "1*";
     }
     exp = aux;
 }
