@@ -199,5 +199,5 @@ int main()
     if(VerificareFunctie(functie,i,nrp)==1)
         cout<<"Functie valida";
     else
-        cout<<"Functie invalida";
+        cout<<"Functie nevalida";
 }
