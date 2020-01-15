@@ -1,204 +1,98 @@
-#include <string>
+#include "validare.h"
+#include "postordine.h"
+#define NUMAR 1
+#define VARIABILA 2
+#define CONSTANTA 3
+#define PARANTEZA_D 4
+#define PARANTEZA_I 5
+#define OPERATOR_B 6
+#define OPERATOR_U 7
 
-using namespace std;
+bool VerificareFunctie(string s)
+{
+    string aux;
+    int n = s.length(), nrParanteze=0;
+    int pre=0;
 
-int EsteLitera(string s,int i)
-{
-    if((s[i]>='a'&&s[i]<='z')||(s[i]>='A'&&s[i]<='Z'))
-        return 1;
-    return 0;
-}
-int EsteCifra(string s,int i)
-{
-    if(s[i]>='0'&&s[i]<='9')
-        return 1;
-    return 0;
-}
-int EsteOperator(string s,int i)
-{
-    if(s[i]=='+'||s[i]=='-'||s[i]=='*'||s[i]=='/'||s[i]=='^')
-        return 1;
-    return 0;
-}
-int LiteraMare(string s,int i)
-{
-    if(s[i]>='A'&&s[i]<='Z')
-        return 1;
-    return 0;
-}
-int OperatoriValizi(string s,int i,int &ok)
-{
-    if(EsteOperator(s,i)==1)
-        {
-
-            if((s[i+1]=='x'||s[i+1]=='y'||s[i+1]=='t'||s[i+1]=='z'||(s[i+2]=='i'&&s[i+1]=='p')||EsteCifra(s,i+1)==1))
-                    return 1;
-            if(i==0)
-                if(s[i]=='-')
-                    return 1;
-                else
-                    return 0;
-            if((EsteCifra(s,i-1)!=1)&&(s[i-1]!='x'&&s[i-1]!='y'&&s[i-1]!='t'&&s[i-1]!='z'&&s[i-1]!='e'&&(s[i-2]!='p'&&s[i-1]!='i'))&&(EsteCifra(s,i+1)!=1&&(s[i+1]!='x'||s[i+1]!='y'||s[i+1]!='t'||s[i+1]!='z'||s[i+1]!='e'||(s[i+1]!='p'&&s[i+2]!='i'))))
-                return 0;
-            if(s[i+1]==NULL)
-                return 0;
-            if(EsteOperator(s,i+1)==1)
-                return 0;
-        }
-
-    return 1;
-}
-int FunctiiElemValide(string s,int &i)
-{
-    if(((s[i]=='l'&&s[i+1]=='n')&&(s[i+2]!='('))||((s[i]=='t'&&s[i+1]=='g')&&(s[i+2]!='(')))
-        return 0;
-    else
-        {
-            if((s[i]=='l'&&s[i+1]=='n')&&(s[i+2]=='(')||((s[i]=='t'&&s[i+1]=='g')&&(s[i+2]=='(')))
-            {
-                    i=i+1;
-                    return 1;
-            }
-
-            if(((s[i]=='s'&&s[i+1]=='i'&&s[i+2]=='n')&&(s[i+3]!='('))||((s[i]=='c'&&s[i+1]=='o'&&s[i+2]=='s')&&(s[i+3]!='('))||((s[i]=='c'&&s[i+1]=='t'&&s[i+2]=='g')&&(s[i+3]!='(')))
-                return 0;
-            else
-                {
-                    if(((s[i]=='s'&&s[i+1]=='i'&&s[i+2]=='n')&&(s[i+3]=='('))||((s[i]=='c'&&s[i+1]=='o'&&s[i+2]=='s')&&(s[i+3]=='('))||((s[i]=='c'&&s[i+1]=='t'&&s[i+2]=='g')&&(s[i+3]=='(')))
-                    {
-                        i=i+2;
-                        return 1;
-                    }
-
-                    if((s[i]=='s'&&s[i+1]=='q'&&s[i+2]=='r'&&s[i+3]=='t')&&(s[i+4]!='('))
-                        return 0;
-                    else
-                    {
-                        if((s[i]=='s'&&s[i+1]=='q'&&s[i+2]=='r'&&s[i+3]=='t')&&(s[i+4]=='('))
-                        {
-                            i=i+3;
-                            return 1;
-                        }
-
-                        if((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='t'&&s[i+4]=='g')&&(s[i+5]!='('))
-                            return 0;
-                        else
-                        {
-                            if((((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='t'&&s[i+4]=='g')&&(s[i+5]=='('))))
-                            {
-                                i=i+4;
-                                return 1;
-                            }
-
-                            if(((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='s'&&s[i+4]=='i'&&s[i+5]=='n')&&(s[i+6]!='('))||((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='c'&&s[i+4]=='o'&&s[i+5]=='n')&&(s[i+6]!='('))||((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='c'&&s[i+4]=='t'&&s[i+5]=='g')&&(s[i+6]!='(')))
-                                return 0;
-                            else
-                            {
-                                if(((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='s'&&s[i+4]=='i'&&s[i+5]=='n')&&(s[i+6]=='('))||((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='c'&&s[i+4]=='o'&&s[i+5]=='n')&&(s[i+6]=='('))||((s[i]=='a'&&s[i+1]=='r'&&s[i+2]=='c'&&s[i+3]=='c'&&s[i+4]=='t'&&s[i+5]=='g')&&(s[i+6]=='(')))
-                                {
-                                    i=i+5;
-                                    return 1;
-                                }
-                            }
-                        }
-                    }
-                }
-        }
-}
-int ElementInvalid(string s,int &i,int &ok)
-{
-    ok=0;
-    if(EsteLitera(s,i)==1&&LiteraMare(s,i)!=1)
-        {
-            if(s[i]=='s'||s[i]=='l'||s[i]=='t'||s[i]=='c'||s[i]=='a')
-                if(FunctiiElemValide(s,i)==1)
-                {
-                    ok=1;
-                    return 1;
-                }
-                else
-                {
-                    if(s[i]=='t')
-                        return 1;
-                    return 0;
-                }
-            if(EsteLitera(s,i+1)==1&&LiteraMare(s,i+i)!=1)
-                if(s[i]!='p'&&s[i+1]!='i')
-                    return 0;
-                else
-                    if(s[i]=='p'&&s[i+1]=='i')
-                        i=i+1;
-                        else
-                            if(s[i]!='x'&&s[i]!='y'&&s[i]!='z'&&s[i]!='t'&&s[i]!='e')
-                                return 0;
-        }
-    return 1;
-}
-int ParantezeValide(string s,int i)
-{
-    if((s[i]=='x'||s[i]=='y'||s[i]=='t'||s[i]=='z'||(s[i]=='i'&&s[i-1]=='p')||EsteCifra(s,i)==1)&&(s[i+1]=='('))
-                return 0;
-    return 1;
-}
-int VerificareFunctie(string s,int &i)
-{
-    int nrp=0;
-    int n, ok=1;
-    n=s.length();
     if (n == 0)
-        return 0;
-    if (n == 1 && s[0] != 'x' && s[0] != 'y' && s[0] != 'z' && s[0] != 't' && s[0] != 'e')
-        return 0;
-    while(i<n)
+        return false;
+    for (int i=0;i<n;i++)
     {
-        if (!EsteLitera(s,i) && !EsteCifra(s,i) && !EsteOperator(s,i) && s[i] != '(' && s[i] != ')')
-            return 0;
-        if (s[i] == ' ')
-            return 0;
-        if(s[i]=='/'&&s[i+1]=='0')
-                return 0;
-        if(s[i]=='0'&&s[i+1]=='^'&&s[i+2]=='0')
-                return 0;
-        if(EsteLitera(s,i)==1)
+        aux += s[i];
+        if (esteNumar(aux))
         {
-            if(LiteraMare(s,i)==1)
-                return 0;
+            if (pre == VARIABILA || pre == CONSTANTA || pre == PARANTEZA_I || pre == OPERATOR_U)
+                return false;
+            aux = "";
+            pre = NUMAR;
+        }
+        else if (esteVariabila(aux))
+        {
+            if (pre == VARIABILA || pre == CONSTANTA || pre == PARANTEZA_I || pre == OPERATOR_U)
+                return false;
+            aux = "";
+            pre = VARIABILA;
+        }
+        else if (esteConstanta(aux))
+        {
+            if (pre == VARIABILA || pre == CONSTANTA || pre == PARANTEZA_I || pre == OPERATOR_U)
+                return false;
+            aux = "";
+            pre = CONSTANTA;
+        }
+        else if (esteOperator(aux))
+        {
+            if (i == n-1)
+                return false;
+            if (aux == "-")
+            {
+                if (pre == OPERATOR_U || pre == OPERATOR_B)
+                    return false;
+                aux = "";
+                pre = OPERATOR_B;
+            }
+            else if (aux == "+" || aux == "*" || aux == "/" || aux == "^")
+            {
+                if (i == 0)
+                    return false;
+                if (pre == PARANTEZA_D || pre == OPERATOR_U || pre == OPERATOR_B)
+                    return false;
+                aux = "";
+                pre = OPERATOR_B;
+            }
             else
             {
-                if(ElementInvalid(s,i,ok)==0)
-                    return 0;
-                else
-                    if(ok==1&&s[i+2]=='-')
-                    {
-                        nrp++;
-                        i=i+1;
-                    }
-                if(ok!=1)
-                    if(ParantezeValide(s,i)==0)
-                        return 0;
+                if (s[i+1] != '(')
+                    return false;
+                if (pre == VARIABILA || pre == CONSTANTA || pre == NUMAR || pre == PARANTEZA_I || pre == OPERATOR_U)
+                    return false;
+                aux = "";
+                pre = OPERATOR_U;
             }
         }
-        else
+        else if (aux == "(")
         {
-            if(!(ok==1&&s[i]=='-'))
-                if(EsteOperator(s,i)==1)
-                    if(OperatoriValizi(s,i,ok)==0)
-                        return 0;
-            if(s[i]=='(')
-                nrp++;
-            if(s[i]==')')
-                {
-                if(EsteOperator(s,i-1)==1)
-                    return 0;
-                if(s[i-1]=='(')
-                    return 0;
-                nrp--;
-
-                }
+            nrParanteze++;
+            if (pre == VARIABILA || pre == CONSTANTA || pre == PARANTEZA_I)
+                return false;
+            aux = "";
+            pre = PARANTEZA_D;
         }
-        i++;
+        else if (aux == ")")
+        {
+
+            nrParanteze--;
+            if (nrParanteze<0)
+                return false;
+            if (pre == OPERATOR_B || pre == OPERATOR_U || pre == PARANTEZA_D)
+                return false;
+            aux = "";
+            pre = PARANTEZA_I;
+        }
     }
-    if(nrp!=0)
-        return 0;
-    return 1;
+    if (nrParanteze)
+        return false;
+    if (aux != "")
+        return false;
+    return true;
 }
