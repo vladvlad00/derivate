@@ -1,4 +1,5 @@
 #include "simplificare.h"
+#include "validare.h"
 
 arboreBinar derivare(arboreBinar A);
 arboreBinar derivareAdunare(arboreBinar A);

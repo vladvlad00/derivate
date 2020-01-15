@@ -24,7 +24,6 @@ struct nodSimplificat
 typedef nodSimplificat* arboreSimplificat;
 
 void restrange(arboreSimplificat&B);
-void adaugaCoeficienti(arboreSimplificat&B);
 void simplifica(arboreSimplificat&B);
 void simplificaAdunare(arboreSimplificat&B);
 void daInFactor(arboreSimplificat&B);

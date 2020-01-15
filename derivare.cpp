@@ -324,4 +324,3 @@ arboreBinar copie(arboreBinar A)
     rez->dr = copie(A->dr);
     return rez;
 }
-

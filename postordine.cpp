@@ -43,7 +43,7 @@ void postordine(string s, string &rez)
         }
     }
     if (aux != "")
-        throw "YEET";
+        throw "WRONG";
     while (!stivaStr.empty())
     {
         rez += stivaStr.top() + ' ';

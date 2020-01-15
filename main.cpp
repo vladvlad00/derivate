@@ -12,7 +12,7 @@ char text[200];
 void setup();
 int language_selection_screen();
 void citesteInModGrafic(char text[200], int x, int y, int culoareFundal, int culoareText);
-void try_again();
+void try_();
 
 int screenWidth, screenHeight;
 
@@ -23,11 +23,15 @@ int main()
 
     setup();
     language = language_selection_screen();
-
     closegraph();
 
-    try_again();
+    try_();
 
+    return 0;
+}
+
+void rezultat()
+    {
     initwindow(screenWidth,screenHeight);
 
     transforma(s);
@@ -69,21 +73,19 @@ int main()
     afisare(D);
     outstreamxy(100, 280);
 
-
-    settextstyle(BOLD_FONT, HORIZ_DIR, 3);
+    settextstyle(BOLD_FONT, HORIZ_DIR, 4);
 
     if(language==1)
-        outtextxy(100, 700, "Apasa orice tasta pentru a iesi");
+        outtextxy(100, 700, "Apasa orice tasta pentru a introduce alta functie!");
         else
-        outtextxy(100, 700, "Press any key to exit");
+        outtextxy(100, 700, "Press any key to try again!");
 
     getch();
-    closegraph();
+    tried=0;
+    try_();
+    }
 
-    return 0;
-}
-
-void try_again()
+void try_()
     {
     initwindow(screenWidth, screenHeight);
 
@@ -93,17 +95,22 @@ void try_again()
     if(language==1)
         {
         outtextxy(200,100, "Introduceti expresia pe care vreti sa o derivati:");
+        outtextxy(200,700, "Scrie \"exit\" pentru a iesi");
         }
 
     if(language==2)
         {
         outtextxy(200,100, "Insert the expression for which you want to find the derivative: ");
+        outtextxy(200,700, "Write \"exit\" to close the program");
         }
 
     if(language==3)
         {
         exit(0);
         }
+
+    settextstyle(BOLD_FONT, HORIZ_DIR, 5);
+    setcolor(RED);
 
     if(tried==1)
         {if(language==1)
@@ -116,19 +123,24 @@ void try_again()
             }
         }
 
+    settextstyle(COMPLEX_FONT, HORIZ_DIR, 4);
+
     citesteInModGrafic(text, 200, 200, BLACK, WHITE);
 
     s=text;
 
-    int i, nrp;
-    if(!VerificareFunctie(s, i, nrp))
+    if(s=="exit")
+        exit(0);
+
+    if(!VerificareFunctie(s))
         {tried=1;
         closegraph();
-        try_again();
-
+        try_();
         }
 
     closegraph();
+
+    rezultat();
     }
 
 void setup()

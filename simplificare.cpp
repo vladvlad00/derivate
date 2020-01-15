@@ -42,7 +42,7 @@ void scrie(arboreSimplificat B)
 {
     if (!esteOperator(B->inf))
     {
-        cout << B->inf; bgiout<< B->inf; nrlit++;
+        bgiout<< B->inf; nrlit++;
         return;
     }
 
@@ -50,24 +50,23 @@ void scrie(arboreSimplificat B)
     {
         arboreSimplificat nod = B->fii[i];
         if ((i > 1 || B->nrFii == 1) && !(B->inf == "+" && nod->inf == "-"))
-            {cout << B->inf; bgiout << B->inf;
+            {bgiout << B->inf; nrlit++;
 
-            if(nrlit>50 && (B->inf=="+" || B->inf=="-" || B->inf=="*"))
+            if(nrlit>60 && (B->inf=="+" || B->inf=="-" || B->inf=="*"))
                 {
                 bgiout<<'\n';
                 bgiout << B->inf;
                 nrlit=0;
                 }
-                else nrlit++;
             }
         if ((esteOperator(nod->inf) && (prioritate(nod->inf) > prioritate(B->inf) || ((B->inf == "^" || B->inf == "/") && prioritate(nod->inf) > 1))) || prioritate(B->inf) == 1)
         {
-            cout << '('; bgiout<< '('; nrlit++;
+            bgiout<< '('; nrlit++;
             scrie(nod);
-            cout << ')'; bgiout<< ')'; nrlit++;
+            bgiout<< ')'; nrlit++;
         }
         else
-            scrie(nod);
+        scrie(nod);
     }
 }
 
