@@ -140,12 +140,21 @@ int ParantezeValide(string s,int i)
                 return 0;
     return 1;
 }
-int VerificareFunctie(string s,int &i,int nrp)
+int VerificareFunctie(string s,int &i)
 {
-    int n, ok;
+    int nrp=0;
+    int n, ok=1;
     n=s.length();
+    if (n == 0)
+        return 0;
+    if (n == 1 && s[0] != 'x' && s[0] != 'y' && s[0] != 'z' && s[0] != 't' && s[0] != 'e')
+        return 0;
     while(i<n)
     {
+        if (!EsteLitera(s,i) && !EsteCifra(s,i) && !EsteOperator(s,i) && s[i] != '(' && s[i] != ')')
+            return 0;
+        if (s[i] == ' ')
+            return 0;
         if(s[i]=='/'&&s[i+1]=='0')
                 return 0;
         if(s[i]=='0'&&s[i+1]=='^'&&s[i+2]=='0')
