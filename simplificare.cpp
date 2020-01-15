@@ -1,7 +1,10 @@
 #include <iostream>
 #include "simplificare.h"
+#include <graphics.h>
+#include "winbgim.h"
 
 int modificare;
+
 
 void afisare(arboreBinar A)
 {
@@ -11,7 +14,6 @@ void afisare(arboreBinar A)
     do
     {
         modificare = 0;
-        //adaugaCoeficienti(B);
         restrange(B);
         simplifica(B);
         scoateInutile(B);
@@ -34,23 +36,35 @@ void afisare(arboreBinar A)
     scrie(B);
 }
 
+int nrlit;
+
 void scrie(arboreSimplificat B)
 {
     if (!esteOperator(B->inf))
     {
-        cout << B->inf;
+        cout << B->inf; bgiout<< B->inf; nrlit++;
         return;
     }
+
     for (int i=1;i<=B->nrFii;i++)
     {
         arboreSimplificat nod = B->fii[i];
         if ((i > 1 || B->nrFii == 1) && !(B->inf == "+" && nod->inf == "-"))
-            cout << B->inf;
+            {cout << B->inf; bgiout << B->inf;
+
+            if(nrlit>50 && (B->inf=="+" || B->inf=="-" || B->inf=="*"))
+                {
+                bgiout<<'\n';
+                bgiout << B->inf;
+                nrlit=0;
+                }
+                else nrlit++;
+            }
         if ((esteOperator(nod->inf) && (prioritate(nod->inf) > prioritate(B->inf) || ((B->inf == "^" || B->inf == "/") && prioritate(nod->inf) > 1))) || prioritate(B->inf) == 1)
         {
-            cout << '(';
+            cout << '('; bgiout<< '('; nrlit++;
             scrie(nod);
-            cout << ')';
+            cout << ')'; bgiout<< ')'; nrlit++;
         }
         else
             scrie(nod);
@@ -201,7 +215,6 @@ void simplifica(arboreSimplificat&B)
         simplificaTrigonometriceInverse(B);
     else if (B->inf == "ln")
         simplificaLn(B);
-        123;
 
 }
 
@@ -652,7 +665,7 @@ bool expresiiEgale(arboreSimplificat B1, arboreSimplificat B2)
 void combina(arboreSimplificat&B1, arboreSimplificat B2)
 {
     int n = B1->nrFii;
-    int pozNumar1, pozNumar2;
+    int pozNumar1=69, pozNumar2=69;
 
     for (int i=1;i<=n;i++)
     {
