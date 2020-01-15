@@ -6,7 +6,7 @@
 using namespace std;
 
 string s, rez;
-int language, i;
+int language;
 
 void setup();
 int language_selection_screen();
@@ -16,8 +16,8 @@ int screenWidth, screenHeight;
 
 int main()
 {
-    screenWidth= GetSystemMetrics(SM_CXSCREEN);
-    screenHeight= GetSystemMetrics(SM_CYSCREEN)-70;
+    screenWidth = GetSystemMetrics(SM_CXSCREEN);
+    screenHeight = GetSystemMetrics(SM_CYSCREEN)-70;
 
     setup();
     language = language_selection_screen();
@@ -26,13 +26,12 @@ int main()
 
     initwindow(screenWidth, screenHeight);
 
-
     settextstyle(COMPLEX_FONT, HORIZ_DIR, 4);
     setcolor(YELLOW);
-    cout<<language;
+
     if(language==1)
         {
-        outtextxy(200,100, "Introduceti expresia pe care vreti sa o derivati: ");
+        outtextxy(200,100, "Introduceti expresia pe care vreti sa o derivati:");
         }
 
     if(language==2)
@@ -50,7 +49,7 @@ int main()
     citesteInModGrafic(text, 200, 200, BLACK, WHITE);
 
     s=text;
-    int nrp, i;
+
     if(!VerificareFunctie(s, i, nrp))
         {
         settextstyle(BOLD_FONT, HORIZ_DIR, 6);
@@ -58,6 +57,7 @@ int main()
             outtextxy(200, 400, "Functie nevalida");
             else
             outtextxy(200, 400, "Invalid function");
+
         getch();
         closegraph();
         return 0;
