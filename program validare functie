@@ -32,8 +32,6 @@ int OperatoriValizi(string s,int i,int &ok)               //O
 
             if((s[i+1]=='x'||s[i+1]=='y'||s[i+1]=='t'||s[i+1]=='z'||(s[i+2]=='i'&&s[i+1]=='p')||EsteCifra(s,i+1)==1))
                     return 1;
-            if(s[i]=='/'&&s[i+1]==0)
-                return 0;
             if(i==0)
                 if(s[i]=='-')
                     return 1;
@@ -140,13 +138,16 @@ int ParantezeValide(string s,int i)               //O
                 return 0;
     return 1;
 }
-
 int VerificareFunctie(string s,int &i,int nrp)   //O
 {
     int n,ok;
     n=s.length();
     while(i<n)
     {
+        if(s[i]=='/'&&s[i+1]=='0')
+                return 0;
+        if(s[i]=='0'&&s[i+1]=='^'&&s[i+2]=='0')
+                return 0;
         if(EsteLitera(s,i)==1)
         {
             if(LiteraMare(s,i)==1)
