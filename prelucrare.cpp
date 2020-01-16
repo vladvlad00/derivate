@@ -3,7 +3,7 @@
 void transforma(string &exp)
 {
     int lg = exp.length();
-    int i, j, radical=0, paranteze=0;
+    int i, j, radical=0, paranteze[100]={0};
     string aux;
 
     j = 0;
@@ -11,8 +11,8 @@ void transforma(string &exp)
     {
         if (exp.find("sqrt",i) == i) //suntem pe radical
         {
-            radical = 1;
-            paranteze = 0;
+            radical++;
+            paranteze[radical] = 0;
             i+=3; //sarim peste qrt
             continue;
         }
@@ -23,13 +23,13 @@ void transforma(string &exp)
         if (radical)
         {
             if (exp[i] == '(')
-                paranteze++;
+                paranteze[radical]++;
             if (exp[i] == ')')
             {
-                paranteze--;
-                if (!paranteze) //gata radicalul
+                paranteze[radical]--;
+                if (!paranteze[radical]) //gata radicalul
                 {
-                    radical = 0;
+                    radical--;
                     aux+="^(1/2)";
                 }
             }

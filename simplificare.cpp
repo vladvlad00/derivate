@@ -224,6 +224,14 @@ void simplificaAdunare(arboreSimplificat&B)
         for (int i=1;i<=B->nrFii;i++)
         {
             arboreSimplificat nod = B->fii[i];
+            if (nod->inf == "^" && nod->fii[1]->inf == "sin" && nod->fii[2]->inf == "2")
+            {
+                if (cautaCos(B,nod->fii[1]->fii[1]))
+                {
+                    stergeFii(B->fii[i]);
+                    B->fii[i]->inf = "1";
+                }
+            }
             if (esteNumar(nod->inf))
             {
                 suma += stoi(nod->inf);
@@ -254,6 +262,21 @@ void simplificaAdunare(arboreSimplificat&B)
             daInFactor(rez);
         B = rez;
     }
+}
+
+bool cautaCos(arboreSimplificat&B, arboreSimplificat exp)
+{
+    for (int i=1;i<=B->nrFii;i++)
+    {
+        arboreSimplificat nod = B->fii[i];
+        if (nod->inf == "^" && nod->fii[1]->inf == "cos" && nod->fii[2]->inf == "2")
+            if (expresiiEgale(nod->fii[1]->fii[1],exp))
+            {
+                B->fii[i]->inf = "$";
+                return true;
+            }
+    }
+    return false;
 }
 
 void daInFactor(arboreSimplificat&B)

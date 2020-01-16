@@ -26,6 +26,7 @@ typedef nodSimplificat* arboreSimplificat;
 void restrange(arboreSimplificat&B);
 void simplifica(arboreSimplificat&B);
 void simplificaAdunare(arboreSimplificat&B);
+bool cautaCos(arboreSimplificat&B,arboreSimplificat exp);
 void daInFactor(arboreSimplificat&B);
 void simplificaInmultire(arboreSimplificat&B);
 void adunaExponenti(arboreSimplificat&B);
