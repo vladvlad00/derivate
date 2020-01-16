@@ -119,26 +119,6 @@ arboreSimplificat transformaArbore(arboreBinar A)
     return rez;
 }
 
-void adaugaCoeficienti(arboreSimplificat&B)
-{
-    for (int i=1;i<=B->nrFii;i++)
-        adaugaCoeficienti(B->fii[i]);
-    if (esteVariabila(B->inf) || esteConstanta(B->inf) || (B->inf != "+" && B->inf != "*" && esteOperator(B->inf)))
-    {
-        arboreSimplificat aux = new nodSimplificat("^");
-        aux->adaugaFiu(B);
-        arboreSimplificat nod = new nodSimplificat("1");
-        aux->adaugaFiu(nod);
-
-        arboreSimplificat aux2 = new nodSimplificat("*");
-        nod = new nodSimplificat("1");
-        aux2->adaugaFiu(nod);
-        aux2->adaugaFiu(aux);
-
-        B = aux2;
-    }
-}
-
 void restrange(arboreSimplificat&B)
 {
     for (int i=1;i<=B->nrFii;i++)
