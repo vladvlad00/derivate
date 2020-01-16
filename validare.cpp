@@ -94,5 +94,20 @@ bool VerificareFunctie(string s)
         return false;
     if (aux != "")
         return false;
+    string variabila;
+    for (int i=0; i<n; i++)
+    {
+        aux = s[i];
+        if (esteVariabila(aux))
+        {
+            if (variabila == "")
+                variabila = aux;
+            else
+            {
+                if (aux != variabila)
+                    return false;
+            }
+        }
+    }
     return true;
 }
